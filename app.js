@@ -76,12 +76,15 @@ registrationForm.addEventListener("submit", async (event) => {
 
   const formData = new FormData(registrationForm);
 
-  const registration = {
-    full_name: formData.get("name").trim(),
-    email: formData.get("email").trim(),
-    roll_number: formData.get("studentId").trim(),
-    event_name: modalEventName.textContent.trim()
-  };
+  
+const registration = {
+  full_name: formData.get("name").trim(),
+  email: formData.get("email").trim(),
+  roll_number: formData.get("studentId").trim(),
+  department: formData.get("department")?.trim() || "",
+  event_name: modalEventName.textContent.trim()
+};
+
 
   try {
     const response = await fetch(
