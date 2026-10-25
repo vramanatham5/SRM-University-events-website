@@ -1,0 +1,18 @@
+# Local configuration and registration data
+.env
+registrations.csv
+
+# Compiled binaries and build output
+events-server.exe
+*.exe
+*.o
+*.obj
+build/
+.dist/
+
+# Local editor settings
+.vscode/
+
+# Operating system files
+Thumbs.db
+.DS_Store

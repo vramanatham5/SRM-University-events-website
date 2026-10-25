@@ -1,0 +1,5 @@
+.git
+.vscode
+.dist
+events-server.exe
+registrations.csv

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta name="description" content="Discover coding events at SRM University. Join hackathons, coding workshops, programming contests, and tech talks.">
+  <title>SRM University — Coding Events</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="SRM University home">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>SRM <span class="brand-period">University</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#events">Coding events</a>
+      <a href="#about">About SRM</a>
+    </nav>
+    <a class="header-cta" href="#events">Find your next thing <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero" id="about">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> SRM UNIVERSITY · STUDENT TECH COMMUNITY</p>
+        <h1>Build something<br><em>brilliant.</em></h1>
+        <p class="hero-description">Meet your next team, sharpen your skills, and turn ideas into working code. Find your next hackathon, workshop, contest, or tech talk at SRM University.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#events">Explore coding events <span aria-hidden="true">↓</span></a>
+          <span class="hero-note"><span class="avatar-stack" aria-hidden="true"><i>C</i><i>O</i><i>D</i></span> Find your coding crew</span>
+        </div>
+        <div class="hero-proof">
+          <div><strong>01</strong><span>Pick an event</span></div>
+          <div><strong>02</strong><span>Save your spot</span></div>
+          <div><strong>03</strong><span>Build & learn</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Featured SRM University coding event, CodeFest hackathon">
+        <div class="art-sticker">THINK<br>BUILD<br>REPEAT <span>✳</span></div>
+        <div class="art-sun"></div>
+        <div class="art-shape art-shape-one"></div>
+        <div class="art-shape art-shape-two"></div>
+        <div class="art-star star-one">✳</div>
+        <div class="art-star star-two">✳</div>
+        <div class="art-caption">
+          <span class="art-label">SRM UNIVERSITY PRESENTS</span>
+          <strong>Code<br>Fest<span>.</span></strong>
+          <div><span>28 OCT</span><span>·</span><span>TECH PARK</span></div>
+        </div>
+        <span class="art-index">SRM / CODE / 026</span>
+      </div>
+      <div class="hero-bottomline"><span>IDEAS IN. GREAT CODE OUT.</span><span>SCROLL TO FIND YOUR NEXT EVENT ↓</span></div>
+    </section>
+
+    <section class="events-section" id="events">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> SRM UNIVERSITY · UPCOMING EVENTS</p>
+          <h2>Find your next <em>challenge.</em></h2>
+        </div>
+        <p class="section-intro">Code with your community.<br>Pick an event and join in.</p>
+      </div>
+
+      <div class="event-toolbar">
+        <div class="filters" role="group" aria-label="Filter events">
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All coding events <span>04</span></button>
+          <button class="filter-button" type="button" data-filter="hackathon" aria-pressed="false">Hackathons</button>
+          <button class="filter-button" type="button" data-filter="workshop" aria-pressed="false">Workshops</button>
+          <button class="filter-button" type="button" data-filter="competition" aria-pressed="false">Contests</button>
+          <button class="filter-button" type="button" data-filter="tech-talk" aria-pressed="false">Tech talks</button>
+        </div>
+        <label class="search-box">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="sr-only">Search events</span>
+          <input id="event-search" type="search" placeholder="Search events..." autocomplete="off">
+          <kbd>/</kbd>
+        </label>
+      </div>
+
+      <div class="event-grid" id="event-grid">
+        <article class="event-card" data-category="hackathon" data-search="codefest hackathon coding programming team build app">
+          <div class="event-visual visual-fest">
+            <span class="event-date"><strong>28</strong><span>OCT</span></span>
+            <span class="visual-label">24-HOUR HACKATHON</span>
+            <span class="visual-graphic graphic-fest" aria-hidden="true"><i>✳</i><b>CODE<br>FEST</b></span>
+            <span class="visual-stamp">BUILD<br>TOGETHER</span>
+          </div>
+          <div class="event-info">
+            <div class="event-meta"><span class="category-tag tag-social">HACKATHON</span><span>9:00 AM <i>·</i> Tech Park</span></div>
+            <h3>CodeFest: Build it in 24 hours</h3>
+            <p>Team up, solve a real-world problem, and build a project from idea to demo.</p>
+            <div class="event-card-bottom"><span class="spots"><i></i> Teams welcome</span><button class="register-button" type="button" data-event="CodeFest: Build it in 24 hours" data-event-id="codefest-hackathon">Save your spot <span aria-hidden="true">↗</span></button></div>
+          </div>
+        </article>
+
+        <article class="event-card" data-category="workshop" data-search="react workshop web development javascript frontend coding">
+          <div class="event-visual visual-zine">
+            <span class="event-date"><strong>30</strong><span>OCT</span></span>
+            <span class="visual-label">HANDS-ON WORKSHOP</span>
+            <span class="visual-graphic graphic-zine" aria-hidden="true"><i>✳</i><b>BUILD<br>WITH<br>REACT</b></span>
+            <span class="visual-stamp stamp-dark">BRING<br>A<br>LAPTOP</span>
+          </div>
+          <div class="event-info">
+            <div class="event-meta"><span class="category-tag tag-creative">WORKSHOP</span><span>2:00 PM <i>·</i> Lab 3</span></div>
+            <h3>Build a web app with React</h3>
+            <p>Create a responsive app, learn component basics, and get practical help from student mentors.</p>
+            <div class="event-card-bottom"><span class="spots spots-limited"><i></i> 8 spots left</span><button class="register-button" type="button" data-event="Build a web app with React" data-event-id="react-workshop">Save your spot <span aria-hidden="true">↗</span></button></div>
+          </div>
+        </article>
+
+        <article class="event-card" data-category="competition" data-search="debugging contest coding competition algorithms python c++">
+          <div class="event-visual visual-portfolio">
+            <span class="event-date"><strong>04</strong><span>NOV</span></span>
+            <span class="visual-label">TEST YOUR SKILLS</span>
+            <span class="visual-graphic graphic-portfolio" aria-hidden="true"><i>↗</i><b>FIND<br>THE<br>BUG</b></span>
+            <span class="visual-stamp stamp-orange">C++<br>PYTHON<br>JAVA</span>
+          </div>
+          <div class="event-info">
+            <div class="event-meta"><span class="category-tag tag-career">CONTEST</span><span>11:00 AM <i>·</i> Computing Block</span></div>
+            <h3>Debug the code challenge</h3>
+            <p>Race the clock to find bugs, fix tricky logic, and climb the campus leaderboard.</p>
+            <div class="event-card-bottom"><span class="spots spots-limited"><i></i> 12 spots left</span><button class="register-button" type="button" data-event="Debug the code challenge" data-event-id="debugging-contest">Save your spot <span aria-hidden="true">↗</span></button></div>
+          </div>
+        </article>
+
+        <article class="event-card" data-category="tech-talk" data-search="artificial intelligence machine learning tech talk ai software engineering">
+          <div class="event-visual visual-yoga">
+            <span class="event-date"><strong>07</strong><span>NOV</span></span>
+            <span class="visual-label">TECH TALK</span>
+            <span class="visual-graphic graphic-yoga" aria-hidden="true"><i>☼</i><b>INSIDE<br>MODERN<br>AI</b></span>
+            <span class="visual-stamp stamp-green">Q&A<br>WITH<br>ENGINEERS</span>
+          </div>
+          <div class="event-info">
+            <div class="event-meta"><span class="category-tag tag-wellness">TECH TALK</span><span>3:30 PM <i>·</i> Seminar Hall</span></div>
+            <h3>How AI gets built: from data to demo</h3>
+            <p>Explore machine learning in practice and ask engineers how they ship AI products.</p>
+            <div class="event-card-bottom"><span class="spots"><i></i> Open registration</span><button class="register-button" type="button" data-event="How AI gets built: from data to demo" data-event-id="ai-tech-talk">Save your spot <span aria-hidden="true">↗</span></button></div>
+          </div>
+        </article>
+      </div>
+      <p class="no-results" id="no-results" hidden>No events match that search. Try another word or category.</p>
+    </section>
+
+    <section class="closing-banner">
+      <span class="closing-spark" aria-hidden="true">✳</span>
+      <p>THE BEST PLANS START WITH A YES</p>
+      <h2>Go on. Get <em>out there.</em></h2>
+      <a href="#events" class="button button-light">Find your next thing <span aria-hidden="true">↑</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true">S</span><span>SRM <span class="brand-period">University</span></span></a>
+    <p>SRM University coding events. <span>© 2026 SRM University</span></p>
+    <a href="#about">Back to top ↑</a>
+  </footer>
+
+  <div class="modal-backdrop" id="registration-modal" hidden>
+    <section class="registration-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" aria-label="Close registration form">×</button>
+      <p class="eyebrow"><span class="eyebrow-dot"></span> SRM UNIVERSITY · EVENT REGISTRATION</p>
+      <h2 id="modal-title">Save your <em>spot.</em></h2>
+      <p class="modal-event-name" id="modal-event-name"></p>
+      <form id="registration-form">
+        <input id="event-id" name="eventId" type="hidden">
+        <label for="student-name">Your name</label>
+        <input id="student-name" name="name" type="text" placeholder="e.g. Alex Morgan" maxlength="100" required>
+        <label for="student-email">College email</label>
+        <input id="student-email" name="email" type="email" placeholder="you@srmist.edu.in" maxlength="254" required>
+        <label for="student-id">Student ID</label>
+        <input id="student-id" name="studentId" type="text" placeholder="Your student ID" maxlength="40" required>
+        <button class="button button-dark modal-submit" type="submit">Count me in <span aria-hidden="true">↗</span></button>
+        <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+      </form>
+      <p class="privacy-note">Just the details we need to save your place.</p>
+    </section>
+  </div>
+  <div class="toast" id="success-toast" role="status" aria-live="polite" hidden><span>✓</span> You're on the list. See you there!</div>
+</body>
+</html>

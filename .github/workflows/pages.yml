@@ -1,0 +1,45 @@
+name: Deploy website to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare website
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+        run: |
+          mkdir -p _site
+          cp index.html styles.css app.js _site/
+          python3 -c 'import json, os; json.dump({"apiBaseUrl": os.environ.get("API_BASE_URL", "").rstrip("/")}, open("_site/config.json", "w"))'
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
