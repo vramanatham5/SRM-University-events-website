@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRM University | Event Registration</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 30px 16px;
+      font-family: Arial, sans-serif;
+      background: #f3f5ec;
+      color: #20372d;
+    }
+
+    main {
+      max-width: 520px;
+      margin: 25px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px #243c3012;
+    }
+
+    h1 { margin-top: 0; }
+    p { line-height: 1.5; }
+
+    label {
+      display: block;
+      margin-top: 17px;
+      font-weight: bold;
+    }
+
+    input, select {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      border: 1px solid #ccd4cb;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 24px;
+      border: 0;
+      border-radius: 7px;
+      background: #244d3b;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .6; }
+
+    #message {
+      overflow-wrap: anywhere;
+      font-weight: bold;
+    }
+
+    a { color: #244d3b; }
+  </style>
+</head>
+
+<body>
+<main>
+  <p><a href="/">← Back to SRM University</a></p>
+
+  <h1>Event Registration</h1>
+  <p>Register for an upcoming student event.</p>
+
+  <form id="registrationForm">
+    <label for="full_name">Full name</label>
+    <input id="full_name" name="full_name"
+           minlength="2" maxlength="100" required>
+
+    <label for="email">College email</label>
+    <input id="email" name="email"
+           type="email" maxlength="254" required>
+
+    <label for="roll_number">Registration / Roll number</label>
+    <input id="roll_number" name="roll_number"
+           maxlength="50" required>
+
+    <label for="department">Department</label>
+    <input id="department" name="department"
+           maxlength="100" required>
+
+    <label for="event_name">Select event</label>
+    <select id="event_name" name="event_name" required>
+      <option value="">Choose an event</option>
+      <option value="Code Fest">Code Fest</option>
+      <option value="Hackathon">Hackathon</option>
+      <option value="Coding Workshop">Coding Workshop</option>
+      <option value="Robotics Workshop">Robotics Workshop</option>
+    </select>
+
+    <button id="submitButton" type="submit">
+      Submit Registration
+    </button>
+    <p id="message" role="status" aria-live="polite"></p>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Replace these with your own Supabase project details.
+  const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL";
+  const SUPABASE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY";
+
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const form = document.getElementById("registrationForm");
+  const button = document.getElementById("submitButton");
+  const message = document.getElementById("message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    button.disabled = true;
+    message.textContent = "Submitting registration...";
+
+    try {
+      const values = Object.fromEntries(new FormData(form));
+
+      const { error } = await db
+        .from("registrations")
+        .insert([values]);
+
+      if (error) throw error;
+
+      message.textContent =
+        "Registration successful! Your details have been submitted.";
+      form.reset();
+    } catch (error) {
+      console.error("Registration error:", error);
+      message.textContent =
+        "Registration failed. Please check your connection and try again.";
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
