@@ -137,9 +137,9 @@ registrationForm.addEventListener("submit", async (event) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          Prefer: "return=minimal"
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+          "Prefer": "return=minimal"
         },
         body: JSON.stringify(registration)
       }
@@ -174,7 +174,6 @@ registrationForm.addEventListener("submit", async (event) => {
   } catch (error) {
     formMessage.textContent =
       error.message || "Unable to register. Please try again.";
-
   } finally {
     submitButton.disabled = false;
     submitButton.innerHTML =
