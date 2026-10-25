@@ -233,7 +233,7 @@ void respond(Socket socket, int status, const std::string& status_text,
              << "Access-Control-Allow-Headers: Content-Type\r\n"
              << "Vary: Origin\r\n";
   }
-  response << "Content-Security-Policy: default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data:\r\n"
+  response << "Content-Security-Policy: default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self' https://mmiduvoyvqpnymkfehqo.supabase.co; img-src 'self' data:\r\n"
            << "\r\n" << body;
   send_all(socket, response.str());
 }
