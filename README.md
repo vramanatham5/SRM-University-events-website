@@ -1,41 +1,48 @@
-# SRM University Coding Event Registration
+# SRM Events Project
 
-A responsive SRM University coding-events website with a C++ registration server. Students can register for the CodeFest hackathon, a React workshop, a debugging contest, and an AI tech talk.
+A responsive event-discovery and registration website for the SRM University student tech community. Browse coding events, filter by category, search by keyword, and register for a spot.
 
 ## Features
 
-- Responsive campus events page with category filters and search.
-- Registration form backed by a C++ HTTP server.
-- Registrations are saved to a local CSV file. Do not commit registration data.
+- Responsive event listings for hackathons, workshops, contests, and tech talks.
+- Category filters, event search, and an accessible registration dialog.
+- Registrations submitted to a Supabase `registrations` table.
+- GitHub Actions workflow for deploying the static site to GitHub Pages.
 
-## Run locally on Windows
+## Run locally
 
-With MinGW-w64 installed, open PowerShell in this project directory:
+The website is static. From the project directory, start a local web server:
 
 ```powershell
-g++ -std=c++17 server.cpp -lws2_32 -o events-server.exe
-.\events-server.exe
+py -m http.server 8000
 ```
 
-Open [http://localhost:8080](http://localhost:8080). Submit an event registration to create `registrations.csv` in the project directory. Stop the server with **Ctrl+C**.
+Then open [http://localhost:8000](http://localhost:8000). A local server is recommended instead of opening `index.html` directly so browser requests to Supabase work as expected.
 
-## Deploy the website with GitHub Pages
+## Configure registration
 
-The GitHub Actions workflow in `.github/workflows/pages.yml` builds and deploys the static website whenever a commit is pushed to `main`.
+The browser submits registrations directly to Supabase. In `app.js`, set `SUPABASE_URL` to your project URL and `SUPABASE_KEY` to its **publishable (anon) key**. Never put a Supabase `service_role` key in client-side code.
 
-1. Push this project to the public repository's `main` branch.
-2. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**.
-3. After the workflow succeeds, the project website will be available at `https://vramanatham5.github.io/SRM-University-events-website/`.
+Create a `registrations` table with columns matching the submitted fields:
 
-GitHub Pages serves the website but cannot run its C++ registration server. To keep registrations working, deploy the C++ API on a Linux VPS:
+| Column | Type | Notes |
+| --- | --- | --- |
+| `full_name` | `text` | Required |
+| `email` | `text` | Required |
+| `roll_number` | `text` | Required |
+| `department` | `text` | Optional; defaults to an empty string |
+| `event_name` | `text` | Required |
 
-1. Point a DNS **A record** for an API subdomain (for example, `events-api.example.com`) to your VPS public IPv4 address. Allow inbound TCP ports **80** and **443** in the VPS firewall/security group.
-2. Install Docker Engine and the Docker Compose plugin on the VPS, then clone this repository.
-3. In the project directory on the VPS, run `cp .env.example .env` and edit `.env`:
-   - Set `DOMAIN` to the API subdomain (for example, `events-api.example.com`).
-   - Set `PUBLIC_ORIGIN` to the exact website origin, `https://vramanatham5.github.io` (no repository path or trailing slash). If using a custom GitHub Pages domain, use that origin instead.
-4. Start the API and HTTPS proxy with `docker compose up -d --build`. Caddy requests and renews the HTTPS certificate automatically.
-5. In GitHub, open **Settings → Secrets and variables → Actions → Variables**, create a repository variable named `API_BASE_URL`, and set it to the API URL (for example, `https://events-api.example.com`).
-6. Push a commit to `main` to redeploy Pages with the API URL. The registration form can then submit cross-origin requests to the API.
+Enable row-level security and add an insert policy for the `anon` role. The site only needs permission to insert registrations; do not grant anonymous users read, update, or delete access. Protect the endpoint against spam before using it for a public production event.
 
-View VPS service logs with `docker compose logs -f`. Registration data persists in the Docker volume named `registrations`. The server also accepts `PORT`, `REGISTRATIONS_FILE`, and `PUBLIC_ORIGIN` environment variables. The `.gitignore` excludes `.env`, local registration data, compiled binaries, and editor settings. Student names, email addresses, and IDs are personal data; restrict VPS access and protect/backup registration data according to your university's policies.
+## Deploy to GitHub Pages
+
+The workflow in `.github/workflows/pages.yml` deploys the static website when changes are pushed to `main`.
+
+1. Push the project to the repository's `main` branch.
+2. In **Settings → Pages**, select **GitHub Actions** as the build and deployment source.
+3. Check the **Actions** tab for the deployment result. The site will be available at `https://<owner>.github.io/<repository>/`.
+
+## Registration data
+
+Registration records contain student names, email addresses, and student IDs. Limit access to the Supabase project and handle collected data according to your university's privacy requirements.
