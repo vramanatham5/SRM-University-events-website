@@ -269,11 +269,12 @@ registrationForm.addEventListener("submit", async (event) => {
   const formData = new FormData(registrationForm);
 
   const registration = {
+    event_id: eventIdInput.value,
     full_name: formData.get("name").trim(),
     email: formData.get("email").trim(),
     roll_number: formData.get("studentId").trim(),
-    department: formData.get("department")?.trim() || "",
-    event_name: modalEventName.textContent.trim()
+    department: formData.get("department").trim(),
+    status: "pending"
   };
 
   try {
