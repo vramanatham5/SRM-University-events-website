@@ -278,7 +278,7 @@ registrationForm.addEventListener("submit", async (event) => {
 
   try {
     const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/registrations`,
+      `${SUPABASE_URL}/rest/v1/portal_registrations`,
       {
         method: "POST",
         headers: {
