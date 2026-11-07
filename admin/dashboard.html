@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRM Admin Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <h2>SRM University - Admin Panel</h2>
+        <button id="logout-btn">Logout</button>
+    </header>
+
+    <main class="container">
+
+        <h1>Admin Dashboard</h1>
+        <p>Manage college coding events and student registrations.</p>
+
+        <section class="stats">
+            <div class="stat-card">
+                <h3 id="event-count">0</h3>
+                <p>Total Events</p>
+            </div>
+
+            <div class="stat-card">
+                <h3 id="registration-count">0</h3>
+                <p>Total Registrations</p>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Add New Event</h2>
+
+            <form id="event-form">
+
+                <label>Event Title</label>
+                <input type="text" id="event-title" required>
+
+                <label>Description</label>
+                <textarea id="event-description" required></textarea>
+
+                <label>Category</label>
+                <select id="event-category" required>
+                    <option value="">Select Category</option>
+                    <option value="hackathon">Hackathon</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="competition">Competition</option>
+                    <option value="tech-talk">Tech Talk</option>
+                </select>
+
+                <label>Event Date and Time</label>
+                <input type="datetime-local" id="event-date" required>
+
+                <label>Venue</label>
+                <input type="text" id="event-venue" required>
+
+                <label>Capacity</label>
+                <input type="number" id="event-capacity" min="1" required>
+
+                <button type="submit">Add Event</button>
+                <p id="event-message"></p>
+            </form>
+        </section>
+
+        <section class="panel">
+            <h2>Manage Events</h2>
+            <div id="events-list">Loading events...</div>
+        </section>
+
+        <section class="panel">
+            <h2>Student Registrations</h2>
+            <div id="registrations-list">Loading registrations...</div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>
