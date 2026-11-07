@@ -1,6 +1,6 @@
 
 const filters = document.querySelectorAll(".filter-button");
-const eventCards = [...document.querySelectorAll(".event-card")];
+let eventCards = [];
 const searchInput = document.querySelector("#event-search");
 const noResults = document.querySelector("#no-results");
 const modal = document.querySelector("#registration-modal");
@@ -15,7 +15,151 @@ let lastFocusedElement = null;
 
 const SUPABASE_URL = "https://mmiduvoyvqpnymkfehqo.supabase.co";
 const SUPABASE_KEY = "sb_publishable_lX6yaIkBUybaJGy_gtBogg_Odb1d0It";
+// Load active events from Supabase
+async function loadEvents() {
+  const eventGrid = document.querySelector("#event-grid");
 
+  eventGrid.innerHTML = "<p>Loading events...</p>";
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/portal_events?select=*&is_active=eq.true&order=event_date.asc`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    const events = await response.json();
+
+    eventGrid.innerHTML = "";
+
+    if (events.length === 0) {
+      eventGrid.innerHTML = "<p>No events available currently.</p>";
+      eventCards = [];
+      updateEvents();
+      return;
+    }
+
+    events.forEach((event, index) => {
+      const card = document.createElement("article");
+
+      const category = (event.category || "event")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+
+      const styles = [
+        ["visual-fest", "visual-fest", "graphic-fest", "tag-social"],
+        ["visual-zine", "visual-zine", "graphic-zine", "tag-creative"],
+        ["visual-portfolio", "visual-portfolio", "graphic-portfolio", "tag-career"],
+        ["visual-yoga", "visual-yoga", "graphic-yoga", "tag-wellness"]
+      ];
+
+      const style = styles[index % styles.length];
+
+      const date = event.event_date
+        ? new Date(event.event_date)
+        : null;
+
+      const day = date && !Number.isNaN(date.getTime())
+        ? date.toLocaleDateString("en-IN", { day: "2-digit" })
+        : "--";
+
+      const month = date && !Number.isNaN(date.getTime())
+        ? date.toLocaleDateString("en-IN", { month: "short" }).toUpperCase()
+        : "";
+
+      const time = date && !Number.isNaN(date.getTime())
+        ? date.toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true
+        })
+        : "Time not specified";
+
+      const escapeHTML = (value) =>
+        String(value ?? "").replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        })[char]);
+
+      const title = escapeHTML(event.title);
+      const description = escapeHTML(event.description);
+      const venue = escapeHTML(event.venue);
+      const categoryName = escapeHTML(event.category || "Event");
+
+      const capacityText = event.capacity
+        ? `Capacity: ${event.capacity}`
+        : "Open registration";
+
+      card.className = "event-card";
+      card.dataset.category = category;
+      card.dataset.search =
+        `${event.title} ${event.description || ""} ${event.category || ""}`;
+
+      card.innerHTML = `
+        <div class="event-visual ${style[0]}">
+          <span class="event-date">
+            <strong>${day}</strong><span>${month}</span>
+          </span>
+
+          <span class="visual-label">${categoryName.toUpperCase()}</span>
+
+          <span class="visual-graphic ${style[2]}" aria-hidden="true">
+            <i>✳</i><b>${title}</b>
+          </span>
+
+          <span class="visual-stamp">JOIN<br>US</span>
+        </div>
+
+        <div class="event-info">
+          <div class="event-meta">
+            <span class="category-tag ${style[3]}">
+              ${categoryName.toUpperCase()}
+            </span>
+            <span>${time} <i>·</i> ${venue}</span>
+          </div>
+
+          <h3>${title}</h3>
+          <p>${description}</p>
+
+          <div class="event-card-bottom">
+            <span class="spots"><i></i>${capacityText}</span>
+
+            <button
+              class="register-button"
+              type="button"
+              data-event="${title}"
+              data-event-id="${escapeHTML(event.id)}"
+            >
+              Save your spot <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </div>
+      `;
+
+      eventGrid.appendChild(card);
+    });
+
+    eventCards = [...document.querySelectorAll(".event-card")];
+    updateEvents();
+
+  } catch (error) {
+    console.error("Error loading events:", error);
+    eventGrid.innerHTML =
+      "<p>Unable to load events. Please try again later.</p>";
+  }
+}
 // Filter and search events
 function updateEvents() {
   const query = searchInput.value.trim().toLowerCase();
@@ -70,16 +214,18 @@ function closeModal() {
 }
 
 // Open registration modal
-document.querySelectorAll(".register-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    lastFocusedElement = button;
-    modalEventName.textContent = button.dataset.event;
-    eventIdInput.value = button.dataset.eventId;
-    formMessage.textContent = "";
+document.querySelector("#event-grid").addEventListener("click", (event) => {
+  const button = event.target.closest(".register-button");
 
-    modal.hidden = false;
-    document.querySelector("#student-name").focus();
-  });
+  if (!button) return;
+
+  lastFocusedElement = button;
+  modalEventName.textContent = button.dataset.event;
+  eventIdInput.value = button.dataset.eventId;
+  formMessage.textContent = "";
+
+  modal.hidden = false;
+  document.querySelector("#student-name").focus();
 });
 
 // Modal close button
@@ -182,4 +328,5 @@ registrationForm.addEventListener("submit", async (event) => {
 });
 
 // Run event filtering when the page loads
-updateEvents();
+// Load events from Supabase when the page loads
+loadEvents();
