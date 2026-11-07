@@ -23,17 +23,18 @@ Then open [http://localhost:8000](http://localhost:8000). A local server is reco
 
 The browser submits registrations directly to Supabase. In `app.js`, set `SUPABASE_URL` to your project URL and `SUPABASE_KEY` to its **publishable (anon) key**. Never put a Supabase `service_role` key in client-side code.
 
-Create a `registrations` table with columns matching the submitted fields:
+Create a `portal_registrations` table with columns matching the submitted fields:
 
 | Column | Type | Notes |
 | --- | --- | --- |
+| `event_id` | `uuid` | Required; references the event in `portal_events` |
 | `full_name` | `text` | Required |
 | `email` | `text` | Required |
 | `roll_number` | `text` | Required |
 | `department` | `text` | Optional; defaults to an empty string |
-| `event_name` | `text` | Required |
+| `status` | `text` | Required; the site submits `pending` |
 
-Enable row-level security and add an insert policy for the `anon` role. The site only needs permission to insert registrations; do not grant anonymous users read, update, or delete access. Protect the endpoint against spam before using it for a public production event.
+Enable row-level security and add an insert policy for the `anon` role. The public site only needs permission to insert registrations; do not grant anonymous users read, update, or delete access. Protect the endpoint against spam before using it for a public production event.
 
 ## Deploy to GitHub Pages
 
